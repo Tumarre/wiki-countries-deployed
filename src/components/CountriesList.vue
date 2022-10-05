@@ -34,25 +34,19 @@
 import { ref } from "vue";
 import CountryDetails from "./CountryDetails.vue";
 import Spinner from "./Spinner.vue";
-// data property to dynamically check if we have any data from the api and provide visbility onto the UI :)
+
 const countries = ref(null);
 
-// Function to call API
 const fetchCountries = async () => {
-  // variable to call api
   const response = await fetch(
     "https://ih-countries-api.herokuapp.com/countries"
   );
-  // variable to store info from api and cleanUp it's JSON format with json() method.
   const finalResponse = await response.json();
-  //   console.log(finalResponse);
 
-  // variable to sort country by "COMMON NAME" from the API instance
   const sortedCountries = finalResponse.sort((a, b) => {
     return a.name.common.localeCompare(b.name.common);
   });
 
-  // We store the value of the sortedCountries inside of the countries variable that is declared on line 27 as a ref() property.
   countries.value = sortedCountries;
 };
 fetchCountries();
